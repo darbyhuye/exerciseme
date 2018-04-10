@@ -40,6 +40,35 @@
       var authorizeButton = document.getElementById('authorize-button');
       var signoutButton = document.getElementById('signout-button');
 
+//need to update: timezone, dateTime 
+var newEvent = {
+  'summary': 'Run outdoors!',
+  //'location': '800 Howard St., San Francisco, CA 94103',
+  'description': ''Exercise Me' predicts this time to be good for outdoor exercise. This is just a suggestion. Exercise at this time with caution.',
+  'start': {
+    'dateTime': '2015-05-28T09:00:00-07:00',
+    'timeZone': 'America/Boston'
+  },
+  'end': {
+    'dateTime': '2015-05-28T17:00:00-07:00',
+    'timeZone': 'America/Boston'
+  },
+  //'recurrence': [
+   // 'RRULE:FREQ=DAILY;COUNT=2'
+ // ],
+ // 'attendees': [
+  //  {'email': 'lpage@example.com'},
+ //   {'email': 'sbrin@example.com'}
+ // ],
+  'reminders': {
+    'useDefault': false,
+    'overrides': [
+      {'method': 'email', 'minutes': 12 * 60},
+      {'method': 'popup', 'minutes': 30}
+    ]
+  }
+};
+
       /**
        *  On load, called to load the auth2 library and API client library.
        */
@@ -52,6 +81,7 @@
        *  listeners.
        */
       function initClient() {
+        console.log("in init client");
         gapi.client.init({
           apiKey: API_KEY,
           clientId: CLIENT_ID,
@@ -76,7 +106,8 @@
         if (isSignedIn) {
           authorizeButton.style.display = 'none';
           signoutButton.style.display = 'block';
-          //listUpcomingEvents(); /* prints events to screen */
+          console.log("this is where the list was printed");
+          listUpcomingEvents(); /* prints events to screen */
         } else {
           authorizeButton.style.display = 'block';
           signoutButton.style.display = 'none';
@@ -125,7 +156,7 @@
         }).then(function(response) {
           var events = response.result.items;
           //appendPre('Upcoming events:');
-
+          console.log("before this if statement");
           if (events.length > 0) {
             for (i = 0; i < events.length; i++) {
               var event = events[i];
@@ -138,7 +169,9 @@
                 end = event.end.date;
               }
               //appendPre(event.summary + ' (' + when + " ending at "+ end + ')');
-              calendarEvents.push(when + " ending at " + end);
+              //calendarEvents.push(when + " ending at " + end);
+              console.log("before add event");
+              addEvent();
             }
           } else {
             appendPre('No upcoming events found.');
@@ -151,32 +184,46 @@
       /* Adds an event to the calendar 
        * should be used after time slot is selected.
        * should be called in a loop such that it executes once a day */
-       /*
+       
       function addEvent() {
-          Event event = new Event();
-          .setSummary("Run outdoors!");
-          .setDescription("Exercise Me predicts this time to be a good one for outdoor exercise. This is just a prediction. Exercise at this time with caution.");
-          DateTime startDateTime = new Date();
-          DateTime endDateTime = new Date() + 60;
-          EventDateTime end = new EventDateTime()
-            .setDateTime(endDateTime);
-          event.setEnd(end);
+         //var newEvent = new Google_event(); /* this does not work */
+          //newEvent.setSummary("Run outdoors!");
+         // newEvent.setDescription("'Exercise Me' predicts this time to be good for outdoor exercise. This is just a suggestion. Exercise at this time with caution.");
 
-          EventReminder[] reminderOverrides = new EventReminder[] {
+         /* update the new event's information */
+            //get users location
+            //get the curret time 
+          var startDateTime = new Date();
+          var endDateTime = new Date() + 60; /* makes workout time always 1 hr */
+
+          newEvent['start']['dateTime'] = startDateTime;
+          newEvent['end']['dateTime'] = endDateTime;
+
+          events.insert()
+
+         // var end = new EventDateTime();
+          //end.setDateTime(endDateTime);
+         // newEvent.setEnd(end);
+
+/*
+          var reminderOverrides = new EventReminder[] {
               new EventReminder().setMethod("email").setMinutes(60 * 12),
               new EventReminder().setMethod("popup").setMinutes(30),
-          };
+          };*/
 
-          Event.Reminders reminders = new Event.Reminders()
-            .setUseDefault(false)
-            .setOverrides(Arrays.asList(reminderOverrides));
-          event.setReminders(reminders);
+        /*  var reminders = new Event.Reminders()
+            reminders.setUseDefault(false)
+            reminders.setOverrides(Arrays.asList(reminderOverrides));
+          newEvent.setReminders(reminders); */
 
-          string calendarId = "exercise me";
-          event = service.events().insert(calendarId, event).execute();
-          System.out.printf("Event created: %s\n", event.getHtmlLink());
+         // var calendarId = "exercise me";
+         // newEvent = service.events().insert(calendarId, newEvent).execute();
+          //System.out.printf("Event created: %s\n", newEvent.getHtmlLink());
 
-      }*/
+          console.log("end of add event");
+
+      }
+
 
     </script>  
     
