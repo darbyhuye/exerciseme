@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Excersize Me</title>
+    <title>Exercise Me</title>
     <meta name="viewport" content="initial-scale=1.0">
     <link rel="stylesheet" href="style.css" type="text/css" />
     <meta charset="utf-8">
-    <script src="weather.js"></script>
-    <script src="https://tile.openweathermap.org/map/{layer}/{z}/{x}/{y}.png?appid={api_key}"
-    async defer></script>
+
+    <script src="calendar.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+    <!--<script src="weather.js"></script> THIS IS TEMPORARY -->
     <style>
 
     </style>
   </head>
 
-  <body onload="load()">
-    <h1 id="title">Excersize me</h1>
+
+  <body onload="handleClientLoad()"> 
+    <h1 id="title">Exercise me</h1>
+    <h2 id="login">Login so Exercise me can recommend a personalized workout time based on your location and schedule! </h2>
+
+    <button id="authorize-button" style="display: none;">Authorize</button>
+    <button id="signout-button" style="display: none;">Sign Out</button>
+
+    <pre id="content"></pre>
+
     
   </body>
 
