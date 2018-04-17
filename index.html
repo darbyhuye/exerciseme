@@ -6,20 +6,23 @@
     <link rel="stylesheet" href="style.css" type="text/css" />
     <meta charset="utf-8">
 
-    <script src="calendar.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-    <script async defer src="https://apis.google.com/js/api.js"
+    <script type="text/javascript" src="calendar.js"></script>
+    <!--<script async defer src="https://apis.google.com/js/api.js"
       onload="this.onload=function(){};handleClientLoad()"
-      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+      onreadystatechange="if (this.readyState === 'complete') this.onload()"> -->
+    <script src="https://apis.google.com/js/api.js"></script>
     </script>
-    <!--<script src="weather.js"></script> THIS IS TEMPORARY -->
+    <!--<script type="text/javascript" src="weather.js"></script> -->
+
+
     <style>
 
     </style>
   </head>
 
 
-  <body onload="handleClientLoad()"> 
+  <body> <!-- onload="handleClientLoad()">  -->
     <h1 id="title">Exercise me</h1>
     <h2 id="login">Login so Exercise me can recommend a personalized workout time based on your location and schedule! </h2>
 

@@ -1,3 +1,4 @@
+
 /*
  *
  *          Darby Huye
@@ -26,6 +27,8 @@ var signoutButton;
 
 //need to update: timezone, dateTime 
 var newEvent; 
+
+var times;
 
 /**
  *  On load, called to load the auth2 library and API client library.
@@ -57,7 +60,6 @@ function handleClientLoad() {
         ]
       }
     };
-    console.log("in calendar.js")
     gapi.load('client:auth2', initClient);
 }
 
@@ -66,8 +68,6 @@ function handleClientLoad() {
  *  listeners.
  */
 function initClient() {
-  console.log("in init client");
-  console.log(API_KEY);
   gapi.client.init({
     apiKey: API_KEY,
     clientId: CLIENT_ID,
@@ -79,8 +79,6 @@ function initClient() {
 
     // Handle the initial sign-in state.
     updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    console.log("before button that is working");
-    console.log(authorizeButton);
     authorizeButton.onclick = handleAuthClick;
     signoutButton.onclick = handleSignoutClick;
   });
@@ -92,12 +90,9 @@ function initClient() {
  */
 function updateSigninStatus(isSignedIn) {
   if (isSignedIn) {
-    console.log("before button issue");
-    console.log(authorizeButton);
     authorizeButton.style.display = 'none';
     signoutButton.style.display = 'block';
-    console.log("this is where the list was printed");
-    listUpcomingEvents(); /* prints events to screen */
+    listOfEvents(); /* makes list of users events  */
   } else {
     authorizeButton.style.display = 'block';
     signoutButton.style.display = 'none';
@@ -135,40 +130,74 @@ function appendPre(message) {
  * the authorized user's calendar. If no events are found an
  * appropriate message is printed.
  */
-function listUpcomingEvents() {
+function listOfEvents() {
+  times = new Array(); 
   gapi.client.calendar.events.list({
     'calendarId': 'primary',
     'timeMin': (new Date()).toISOString(),
     'showDeleted': false,
     'singleEvents': true,
-    'maxResults': 30,
+    'maxResults': 15,
     'orderBy': 'startTime'
   }).then(function(response) {
     var events = response.result.items;
     appendPre('Upcoming events:');
-    console.log("before this if statement");
+
     if (events.length > 0) {
-      for (i = 0; i < events.length; i++) {
+      var duration = 0;
+      var possible_time = {
+        "hour": [],
+        'duration': []
+      };
+        for (i = 0; i < events.length; i++) {
         var event = events[i];
         var when = event.start.dateTime;
         if (!when) {  /* if the event is all day long */
           when = event.start.date;
+          duration = 24;
         }
         var end = event.end.dateTime;
         if (!end) {
           end = event.end.date;
         }
-        //appendPre(event.summary + ' (' + when + " ending at "+ end + ')');
-        //calendarEvents.push(when + " ending at " + end);
-        console.log("before add event");
-        addEvent(events);
+
+        var endMin = stringToMinutes(end);
+        var whenMin = stringToMinutes(when);
+
+        if(duration < 24) duration = endMin - whenMin; /* sets duration */
+        possible_time.hour = whenMin;
+        possible_time.duration = duration;
+        times.push(possible_time);
+
+        /* reinitlizing variables */
+        duration = 0;
+        possible_time = {
+                "hour":[],
+                "duration":[]
+        };
+
+        console.log("before i will add event");
+        //addEvent(events);
       }
     } else {
-      appendPre('No upcoming events found.');
+        times = NULL; /* there are no upcoming events */
     }
+    console.log("DONE GETTING CALENDAR TIMES");
+    console.log(times);
+    return times; 
   });
 }
 
+function stringToMinutes(string)
+{
+  /* parse the times */
+  var part = string.split('-', 3);
+  var temp = part[2].substring(3)
+  /* turn string into number (in minutes) */
+  var temp2 = temp.split(':', 2);
+  var minutes = parseInt(temp2[0]) + (temp2[1] / 60);
+  return minutes;
+}
 
 
 /* Adds an event to the calendar 
@@ -202,5 +231,86 @@ function addEvent(events) {
 
     console.log("end of add event");
 
+}
+
+
+/************************ SHOULD BE IN WEATHER.JS -> EXPERIEMENTING **********/
+
+jQuery(document).ready(function($) {
+  $.ajax({
+  url : "http://api.wunderground.com/api/5c7bce2bb5d620b8/forecast/hourly/q/MA/Boston.json",
+  dataType : "jsonp",
+  success : function(parsed_json) {
+    var possibleWeatherTimes = nonRainingWindows(parsed_json);
+    console.log("TIMES FOR WEATHER");
+    console.log(possibleWeatherTimes);
+
+
+    var possibleCalendarTimes;
+    /* get possible calendar times here */
+    handleClientLoad(function(possibleCalendarTimes) {
+          possibleCalendarTimes = times;
+          console.log("TIMES FOR CALENDAR");
+          console.log(possibleCalendarTimes);
+    }, console.log("FAILED"));
+
+
+   // var possibleCalendarTimes = handleClientLoad();
+
+    }
+  });
+});
+
+function nonRainingWindows(parsed_json)
+{
+    /* information for the next 36 hours */
+    var hourly_forecast = parsed_json['hourly_forecast']; 
+    var times = new Array();
+    var possible_time = {
+        "hour":[],
+        "duration":[]
+    };
+
+    var end_of_window = true;
+    var duration = 0;
+    var inchesRain;
+    var time;
+    /* makes list of windows */
+    for(var i = 0; i < hourly_forecast.length; i++) {
+        time = parseFloat(hourly_forecast[i]['FCTTIME']['hour']);
+        inchesRain = parseFloat(hourly_forecast[i]['qpf'].english);
+        duration++;
+        if(end_of_window == true && inchesRain == 0) {
+            end_of_window = false; /* beginning of new window */
+            possible_time.hour = time; 
+        }
+        if(end_of_window == false && inchesRain > 0) { /* end of a window */
+            end_of_window = true;
+            possible_time.duration = duration;
+            times.push(possible_time);
+            /* re-initilizes variables */
+            duration = 0;
+            possible_time = {
+                "hour":[],
+                "duration":[]
+            };
+        } 
+    }
+    if(duration > 0 && inchesRain == 0) {
+            possible_time.duration = duration;
+            times.push(possible_time);
+    }
+
+    return times;
+}
+
+
+/*******************COMPARE TIMES IN THIS FILE *********************/
+/* change this later when you know how to access functions from
+    different files properly */
+
+
+function compareLists(weather, calendar){
+    console.log(weather.length);
 }
 

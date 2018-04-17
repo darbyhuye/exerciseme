@@ -17,13 +17,7 @@
 var allwindows = Array();
 var count = 0; /* Invariant: will always be divisible by two */
 
-//calendar api??
-    //look for an api that can access a calendar and get the information off
-    //of it 
-        //maybe even read calendar into a JSON object ??
-
-
-function pickOptimalWindow() 
+function compareLists() 
 {
-    weather.getWeather(); //is this how you call a function from another file?
+   //nonRainingWindows();
 }

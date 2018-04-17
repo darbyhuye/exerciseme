@@ -10,8 +10,20 @@ jQuery(document).ready(function($) {
   url : "http://api.wunderground.com/api/5c7bce2bb5d620b8/forecast/hourly/q/MA/Boston.json",
   dataType : "jsonp",
   success : function(parsed_json) {
-    var PossibleTimes = nonRainingWindows(parsed_json);
-    return PossibleTimes;
+    var possibleWeatherTimes = nonRainingWindows(parsed_json);
+    console.log("TIMES FOR WEATHER");
+    console.log(possibleWeatherTimes);
+
+
+    /* get possible calendar times here */
+    handleClientLoad(function (possibleCalendarTimes){
+
+    });
+
+    var possibleCalendarTimes = handleClientLoad();
+    console.log("TIMES FOR CALENDAR");
+    console.log(possibleCalendarTimes);
+
     }
   });
 });
@@ -55,5 +67,16 @@ function nonRainingWindows(parsed_json)
             possible_time.duration = duration;
             times.push(possible_time);
     }
+
     return times;
+}
+
+
+/*******************COMPARE TIMES IN THIS FILE *********************/
+/* change this later when you know how to access functions from
+    different files properly */
+
+
+function compareLists(weather, calendar){
+    console.log(weather.length);
 }
