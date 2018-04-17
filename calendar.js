@@ -141,7 +141,7 @@ function listOfEvents() {
     'orderBy': 'startTime'
   }).then(function(response) {
     var events = response.result.items;
-    appendPre('Upcoming events:');
+    //appendPre('Upcoming events:');
 
     if (events.length > 0) {
       var duration = 0;
@@ -305,12 +305,14 @@ function nonRainingWindows(parsed_json)
 }
 
 
-/*******************COMPARE TIMES IN THIS FILE *********************/
+/*******************COMPARE TIMES -> TEMPORARY *********************/
 /* change this later when you know how to access functions from
     different files properly */
 
 
 function compareLists(weather, calendar){
     console.log(weather.length);
+    console.log(calendar.length);
+    alert("you should run outdoors at this time!");
 }
 

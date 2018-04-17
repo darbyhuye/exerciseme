@@ -4,6 +4,7 @@
     <title>Exercise Me</title>
     <meta name="viewport" content="initial-scale=1.0">
     <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <meta charset="utf-8">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
@@ -16,20 +17,25 @@
     <!--<script type="text/javascript" src="weather.js"></script> -->
 
 
+
     <style>
 
     </style>
   </head>
 
-
   <body> <!-- onload="handleClientLoad()">  -->
-    <h1 id="title">Exercise me</h1>
-    <h2 id="login">Login so Exercise me can recommend a personalized workout time based on your location and schedule! </h2>
 
+
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="text-center">Exercise me</h1>
+    <p>Login so <kbd>Exercise me</kbd> can recommend a personalized workout time based on your location and schedule!</p>
+  </div>
     <button id="authorize-button" style="display: none;">Authorize</button>
-    <button id="signout-button" style="display: none;">Sign Out</button>
-
-    <pre id="content"></pre>
+    <button id="signout-button" style="display: none;">Sign Out</button> 
+  <p class="text-center">Add information about why this is helpful for me and could be helpful to others.</p>
+  <p>Here is a bunch of information about this application. I will insert its limitations as of now and how i want to develop this app in the future.</p>
+</div>
 
     
   </body>
