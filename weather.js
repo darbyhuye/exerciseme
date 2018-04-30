@@ -5,32 +5,33 @@
  *
  */
 
-jQuery(document).ready(function($) {
-  $.ajax({
-  url : "http://api.wunderground.com/api/5c7bce2bb5d620b8/forecast/hourly/q/MA/Boston.json",
-  dataType : "jsonp",
-  success : function(parsed_json) {
-    var possibleWeatherTimes = nonRainingWindows(parsed_json);
-    console.log("TIMES FOR WEATHER");
-    console.log(possibleWeatherTimes);
+// jQuery(document).ready(function($) {
+//   $.ajax({
+//   url : "http://api.wunderground.com/api/5c7bce2bb5d620b8/forecast/hourly/q/MA/Boston.json",
+//   dataType : "jsonp",
+//   success : function(parsed_json) {
+//     var possibleWeatherTimes = nonRainingWindows(parsed_json);
+//     console.log("TIMES FOR WEATHER");
+//     console.log(possibleWeatherTimes);
 
 
-    /* get possible calendar times here */
-    handleClientLoad(function (possibleCalendarTimes){
+//     /* get possible calendar times here */
+//     handleClientLoad(function (possibleCalendarTimes){
 
-    });
+//     });
 
-    var possibleCalendarTimes = handleClientLoad();
-    console.log("TIMES FOR CALENDAR");
-    console.log(possibleCalendarTimes);
+//     var possibleCalendarTimes = handleClientLoad();
+//     console.log("TIMES FOR CALENDAR");
+//     console.log(possibleCalendarTimes);
 
-    }
-  });
-});
+//     }
+//   });
+// });
 
 function nonRainingWindows(parsed_json)
 {
     /* information for the next 36 hours */
+    console.log("in nonRainingWindows");
     var hourly_forecast = parsed_json['hourly_forecast']; 
     var times = new Array();
     var possible_time = {
@@ -77,6 +78,6 @@ function nonRainingWindows(parsed_json)
     different files properly */
 
 
-function compareLists(weather, calendar){
-    console.log(weather.length);
-}
+// function compareLists(weather, calendar){
+//     console.log(weather.length);
+// }

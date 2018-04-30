@@ -4,40 +4,28 @@
     <title>Exercise Me</title>
     <meta name="viewport" content="initial-scale=1.0">
     <link rel="stylesheet" href="style.css" type="text/css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <meta charset="utf-8">
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="calendar.js"></script>
-    <!--<script async defer src="https://apis.google.com/js/api.js"
-      onload="this.onload=function(){};handleClientLoad()"
-      onreadystatechange="if (this.readyState === 'complete') this.onload()"> -->
-    <script src="https://apis.google.com/js/api.js"></script>
-    </script>
-    <!--<script type="text/javascript" src="weather.js"></script> -->
-
-
-
-    <style>
-
-    </style>
   </head>
 
-  <body> <!-- onload="handleClientLoad()">  -->
+  <body> 
 
+    <h1>Exercise me</h1>
+    <h2>Demo</h2>
+    <p>Login into your google account if you aren't already:</p>
 
-<div class="container">
-  <div class="jumbotron">
-    <h1 class="text-center">Exercise me</h1>
-    <p>Login so <kbd>Exercise me</kbd> can recommend a personalized workout time based on your location and schedule!</p>
-  </div>
     <button id="authorize-button" style="display: none;">Authorize</button>
-    <button id="signout-button" style="display: none;">Sign Out</button> 
-  <p class="text-center">Add information about why this is helpful for me and could be helpful to others.</p>
-  <p>Here is a bunch of information about this application. I will insert its limitations as of now and how i want to develop this app in the future.</p>
-</div>
+    <button id="signout-button" style="display: none;">Sign Out</button>
 
-    
+    <pre id="content"></pre>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+
+    <script src="https://apis.google.com/js/api.js"></script>
+
+    <script type="text/javascript" src="weather.js"></script>
+    <script type="text/javascript" src="EM2.js"></script>
+    <script type="text/javascript" src="optimize.js"></script>
   </body>
 
 </html>
