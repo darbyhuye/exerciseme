@@ -15,13 +15,17 @@
 function compareLists(weather, calendar){
     /* no possible time */
     if(weather.length == 0 || calendar.length == 0) return null;
+    //return 20.00;
+
+    console.log(weather);
+    console.log(calendar);
 
     var Whour = null;
     var Chour = null;
     var Wdur = null;
     var Cdur = null;
     var diff;
-    var overlap;
+    var overlap = 0;
     for(var i = 0; i < weather.length; i++) {
         Whour = weather[i].hour;
         Wdur = weather[i].duration;
@@ -46,11 +50,18 @@ function compareLists(weather, calendar){
                 if(Chour < Whour) { //if free before not raining
                     diff = Whour - Chour;
                     //if they overlap
+                    console.log(diff);
+                    console.log("cdur: " + Cdur);
+                    console.log("wdur: " + Wdur);
                     if(diff < Cdur) {
                         //see if an hour overlaps
                         if(Wdur < Cdur) overlap = Wdur;
-                        else if(Cdur > Wdur) overlap = (Cdur + Chour) - Whour;
+                        //else if(Cdur <= Wdur) overlap = Whour - (Chour + Cdur);
+                        
+                        else if(Cdur < Wdur) overlap = (Cdur +Chour) - Whour;
                         else if(Cdur == Wdur) overlap = Whour - (Chour + Cdur);
+
+                        //else if(Cdur == Wdur) overlap = Whour - (Chour + Cdur);
                         console.log(overlap);
                         if(overlap > 1)
                             return Whour;

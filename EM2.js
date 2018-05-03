@@ -212,7 +212,8 @@ function addEvent(events, thetime) {
   console.log("in add event");
   console.log(events);
 
-    var startDateTime = convertTimetoDate(thetime)
+    var startDateTime = convertTimetoDate(thetime);
+    console.log("start time: " + startDateTime);
     var endDateTime = convertTimetoDate(thetime + 1); /* makes workout time always 1 hr */
 
     newEvent = {
@@ -239,13 +240,14 @@ function addEvent(events, thetime) {
       //appendPre('Event created: ' + newEvent.htmlLink);
     });
 
-    console.log("end of add event");
+    //console.log("end of add event");
 
 }
 
 function convertTimetoDate(time) {  
   var hour = Math.floor(time);
   var dec = time - hour;
+  console.log("decimal: " + (dec * 60));
   return (hour + ':' + (dec * 60));
 }
 
@@ -264,13 +266,14 @@ jQuery(document).ready(function($) {
       setTimeout(function(){
         possibleCalendarTimes = times;
         bestTime = compareLists(possibleWeatherTimes, possibleCalendarTimes);
+        console.log(bestTime);
         if(bestTime != null) {
             addEvent(events, bestTime);
             alert('The best time for you to exercise outdoors was just added to your google calendar.');
         } else {
           alert('It seems you are super busy or it is very rainy where you are. There are no good times for you to exercise outdoors.');
         }
-      }, 1800);
+      }, 2500);
     }
   });
 });
