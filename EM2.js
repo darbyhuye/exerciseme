@@ -20,6 +20,9 @@ var times;
 var isFirst, isLast;
 var events;
 
+var todayString;
+var tomorrowString;
+
 function handleClientLoad() {
   gapi.load('client:auth2', initClient);
 }
@@ -186,7 +189,11 @@ function listOfEvents() {
 function stringToMinutes(string, isFirst, isLast)
 {
   if(isLast || isFirst) {
+    console.log(string);
     var part = string.split('-', 3);
+    var tempstring = string.split('T', 2);
+    todayString = tempstring[0];
+    //console.log("today string1: " + todayString);
     var temp = part[2].substring(3);
     var temp2 = temp.split(':', 3);
     var minutes = parseInt(temp2[0]) + (temp2[1] / 60);
@@ -196,6 +203,9 @@ function stringToMinutes(string, isFirst, isLast)
   }
   /* parse the times */
   var part = string.split('-', 3);
+  var tempstring = string.split('T', 2);
+  todayString = tempstring[0];
+ // console.log("today string2: " + todayString);
   var temp = part[2].substring(3);
   /* turn string into number (in minutes) */
   var temp2 = temp.split(':', 2);
@@ -215,16 +225,16 @@ function addEvent(events, thetime) {
     var startDateTime = convertTimetoDate(thetime);
     console.log("start time: " + startDateTime);
     var endDateTime = convertTimetoDate(thetime + 1); /* makes workout time always 1 hr */
-
+    //tomString(todayString);
     newEvent = {
       'summary': 'Run outdoors!',
       'description': 'Exercise Me predicts this time to be good for outdoor exercise. This is just a suggestion. Exercise at this time with caution.',
       'start': {
-        'dateTime': '2018-04-30T' + startDateTime + ':00-04:00',
+        'dateTime': todayString + 'T' + startDateTime + ':00-04:00',
         'timeZone': 'America/New_York'
       },
       'end': {
-        'dateTime': '2018-04-30T' + endDateTime + ':00-04:00',
+        'dateTime': todayString + 'T' + endDateTime + ':00-04:00',
         'timeZone': 'America/New_York'
       },
       'colorId': 11
@@ -242,6 +252,17 @@ function addEvent(events, thetime) {
 
     //console.log("end of add event");
 
+}
+
+function tomString(string) {
+    //console.log(todayString);
+    var part = string.split('-', 3);
+    console.log(string);
+    console.log(part[2]);
+    var tomday = parseInt(part[2]) + 1; //wont work for end of month or year
+    console.log("tom day " + tomday);
+    tomorrowString = part[0] + '-' + part[1] + '-' + tomday;
+    console.log("tom string: " + tomorrowString);
 }
 
 function convertTimetoDate(time) {  
@@ -269,6 +290,8 @@ jQuery(document).ready(function($) {
         console.log(bestTime);
         if(bestTime != null) {
             addEvent(events, bestTime);
+           // tomString(todayString);
+            console.log("would add at time: " + bestTime);
             alert('The best time for you to exercise outdoors was just added to your google calendar.');
         } else {
           alert('It seems you are super busy or it is very rainy where you are. There are no good times for you to exercise outdoors.');
