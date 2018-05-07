@@ -1,6 +1,8 @@
 /* Darby Huye
  * EXP57 independent project
  * attempt 2
+
+ *  This file replaced calendar.js -> can rename it now
  */
 
  // Client ID and API key from the Developer Console
@@ -272,7 +274,14 @@ function convertTimetoDate(time) {
   return (hour + ':' + (dec * 60));
 }
 
-/*****************************************************************************/
+/*****************************************************************************
+                            COMPARISONS ARE DONE BELOW
+              AS WELL AS COLLECTIONG THE LIST REGAURDING WEATHER INFORMATION
+I know that my setTimeout function is an extremely hacky solution that 
+shows my lack of knowledge in JavaScripts asynchronous behaviour. I hope 
+to resolve that issue soon. When that happens, the following code will
+be moved to a different file for organization purposes.
+*****************************************************************************/
 var possibleCalendarTimes;
 
 jQuery(document).ready(function($) {
@@ -290,7 +299,6 @@ jQuery(document).ready(function($) {
         console.log(bestTime);
         if(bestTime != null) {
             addEvent(events, bestTime);
-           // tomString(todayString);
             console.log("would add at time: " + bestTime);
             alert('The best time for you to exercise outdoors was just added to your google calendar.');
         } else {

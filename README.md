@@ -8,6 +8,7 @@ I created a program that adds a workout time to the user's google calendar when 
     - only works in boston right now
     - "best" workout time tends to be one at 8 am the next day; should be specialized for the user
     -some edge cases for when comparing non-raining windows with times open on the google calendar fail.
+    - server is not complete
     - lots of security flaws
 
 I used the google calendar api as well as wunderground api for collecting weather data. 
